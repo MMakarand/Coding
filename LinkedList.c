@@ -7,7 +7,8 @@
 /* 
  * File:   main.c
  * Author: makarand
- *
+ * This is recursive version.
+ * For iterative version refer :- http://www.edufyme.com/code/?id=c74d97b01eae257e44aa9d5bade97baf
  * Created on 30 April, 2016, 2:17 PM
  */
 
@@ -20,7 +21,98 @@ struct Node {
     struct Node *next;
 };
 
+struct Node * k_way_reverse(struct Node **head, struct Node *start, int k)
+{
+    printf("Inside %d -way reverse",k);
 
+    int i=0,j=0;
+  //  struct Node *ptr = malloc(k*sizeof(struct Node *));
+    struct Node *temp0, *temp_last, *temp_curr, *temp_next;
+
+    
+    //Nothing to reverse
+    if(*head == NULL || start == NULL || k<=0)
+        return NULL;
+
+	temp0 = start;
+
+	temp_last = temp0;
+	temp_curr = temp_last->next;
+
+	if(temp_curr == NULL)
+		return start;
+	
+
+	temp_next = temp_curr->next;
+
+	while(temp_curr != NULL && i < k-1)
+	{
+		temp_curr->next =  temp_last;
+		temp_last = temp_curr;
+		temp_curr = temp_next;
+		if(temp_next != NULL)
+			temp_next = temp_next->next;
+
+		i++;
+
+
+
+	}		
+
+	if(temp_curr == NULL )
+	{
+		temp0->next = NULL;
+		if(temp0 == *head)
+			*head = temp_last;
+		return temp_last;
+			
+
+	}
+
+	temp0->next = k_way_reverse(head, temp_curr, k);
+	if(temp0 == *head)
+			*head = temp_last;
+		return temp_last;
+		
+/*   
+    ptr = *start;
+    while(i<k)
+    {
+        printf("I=%d\n",i);
+        
+        if(ptr[i].next == NULL){
+            
+            if(*head == *start)
+                *head = &ptr[i];
+        
+           if(i>0) {    
+                ptr[i].next =  &ptr[i-1];
+           }
+            ptr[0].next = NULL;
+             
+        }
+        else{
+            temp = ptr[i].next;
+           if(i>0) {    
+            ptr[i].next =  &ptr[i-1];
+            ptr[0].next = temp;
+           }
+        
+        }
+            
+        i++;
+    }
+    j=i-1;
+    while(j)
+    {
+        printf("%d\t",ptr[j].data); j--;
+    }
+    printf("%d\t",ptr[j].data);
+    ptr[0].next = k_way_reverse(head, &temp, k);
+    return &ptr[i-1];
+    
+*/
+}
 void findKey(struct Node **head, struct Node **prev, struct Node **temp, int key )
 {
     if (*head == NULL) return;
@@ -185,11 +277,73 @@ void print_Linked_List(struct Node *head)
 
 }
 
+struct Node * three_Way_reverse(struct node **head, struct Node ** start)
+{
+
+    struct Node *first, *second,*third,*temp;
+    //Check for empty List
+    if(*head == NULL ||  *start == NULL)
+        return NULL;
+    
+    first = *start;
+    
+    if(first->next == NULL)
+        return first;
+    
+    second = first->next;
+    
+    if(second->next == NULL)
+    {
+        if(*head == *start)
+        {
+         *head = second;
+        }
+        
+        second->next = first;
+        first->next=NULL;
+        return second;
+    }
+    
+    third = second->next;
+    
+    if(third->next == NULL)
+    {
+        if(*head == *start)
+        {
+        
+         *head = third;
+        }
+        
+        third->next = second;
+        second->next= first;
+        first->next = NULL;
+        return third;
+    
+    }
+    
+    temp = third->next;
+    
+        if(*head == *start)
+        {
+        
+         *head = third;
+        }
+    
+        third->next = second;
+        second->next= first;
+        first->next = three_Way_reverse(head, &temp);
+        return third;
+    
+    
+}
+
+
 /*
  * 
  */
 int main(int argc, char** argv) {
 
+    int k = 0;
     struct Node *head=NULL;
     
     push(&head,5);
@@ -198,14 +352,14 @@ int main(int argc, char** argv) {
     
     push(&head,1);
     
-    print_Linked_List(head);
+//    print_Linked_List(head);
     append(&head,7);
     
     append(&head,9);
     
-    print_Linked_List(head);
-    insertAt(head->next,2);
-    print_Linked_List(head);
+   // print_Linked_List(head);
+    insertAt(head,2);
+ /*  print_Linked_List(head);
     
     swap(&head,5,7);
     print_Linked_List(head);
@@ -214,10 +368,18 @@ int main(int argc, char** argv) {
     print_Linked_List(head);
     
     swap(&head,100,9);
-    print_Linked_List(head);
+   
+  */
+   print_Linked_List(head);
     
-    
-    
+//  three_Way_reverse(&head, &head);
+  
+   printf("Enter k for k-way reverse");
+   scanf("%d",&k);
+   
+   printf("Calling %d -way reverse",k);
+   head = k_way_reverse(&head,head,k);
+     print_Linked_List(head);
     return (EXIT_SUCCESS);
 }
 
