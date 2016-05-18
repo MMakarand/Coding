@@ -21,6 +21,51 @@ struct Node {
     struct Node *next;
 };
 
+void moveNode(struct Node **dest, struct Node **src)
+{
+
+	struct Node *newNode = *src;
+	if(newNode != NULL)
+	{
+	*src = (*src)->next;
+	newNode->next=*dest;
+	*dest = newNode;
+	}
+}
+
+struct Node * merge(struct Node *a, struct Node *b)
+{
+	struct Node *result = NULL;
+
+	/* point to the last result pointer */
+	struct Node **lastPtrRef = &result;
+
+	while(1)
+	{
+		if(a==NULL)
+		{
+			*lastPtrRef = b;
+			break;
+		}
+		else if(b==NULL)
+		{
+			*lastPtrRef = a;
+			break;
+		}
+		if(a->data <= b->data)
+		{
+			moveNode(lastPtrRef, &a);
+		}
+		else
+		{
+			moveNode(lastPtrRef, &b);
+		}
+	//	lastPtrRef = ((*lastPtrRef)->next);
+		lastPtrRef = &((*lastPtrRef)->next); 
+	}	
+	return result;
+}
+
 struct Node * k_way_reverse(struct Node **head, struct Node *start, int k)
 {
     printf("Inside %d -way reverse",k);
@@ -345,20 +390,26 @@ int main(int argc, char** argv) {
 
     int k = 0;
     struct Node *head=NULL;
-    
+    struct Node *head2 = NULL; 
+    struct Node *result;
     push(&head,5);
     
     push(&head,3);
     
     push(&head,1);
     
-//    print_Linked_List(head);
-    append(&head,7);
+   print_Linked_List(head);
+    push(&head2,7);
     
-    append(&head,9);
-    
-   // print_Linked_List(head);
-    insertAt(head,2);
+    push(&head2,4);
+
+    push(&head2,2);
+  
+
+
+//	moveNode(&head2, &head);
+    print_Linked_List(head2);
+  //  insertAt(head,1);
  /*  print_Linked_List(head);
     
     swap(&head,5,7);
@@ -370,16 +421,19 @@ int main(int argc, char** argv) {
     swap(&head,100,9);
    
   */
-   print_Linked_List(head);
-    
+ 
+//   print_Linked_List(head);
+
+   result =  merge(head, head2);	    
+
 //  three_Way_reverse(&head, &head);
   
-   printf("Enter k for k-way reverse");
-   scanf("%d",&k);
+//   printf("Enter k for k-way reverse");
+ //  scanf("%d",&k);
    
-   printf("Calling %d -way reverse",k);
-   head = k_way_reverse(&head,head,k);
-     print_Linked_List(head);
+ //  printf("Calling %d -way reverse",k);
+ //  head = k_way_reverse(&head,head,k);
+     print_Linked_List(result);
     return (EXIT_SUCCESS);
 }
 
