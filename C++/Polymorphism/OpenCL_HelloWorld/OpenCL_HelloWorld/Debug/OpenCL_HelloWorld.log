@@ -1,0 +1,4 @@
+﻿  OpenCL_HelloWorld.cpp
+c:\users\mrmuley\documents\books\coding\c++\polymorphism\opencl_helloworld\opencl_helloworld\opencl_helloworld.cpp(20): warning C4101: 'err': unreferenced local variable
+  OpenCL_HelloWorld.vcxproj -> C:\Users\mrmuley\Documents\Books\Coding\C++\Polymorphism\OpenCL_HelloWorld\Debug\OpenCL_HelloWorld.exe
+  OpenCL_HelloWorld.vcxproj -> C:\Users\mrmuley\Documents\Books\Coding\C++\Polymorphism\OpenCL_HelloWorld\Debug\OpenCL_HelloWorld.pdb (Full PDB)

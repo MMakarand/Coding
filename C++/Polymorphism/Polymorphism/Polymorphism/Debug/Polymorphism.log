@@ -1,0 +1,3 @@
+﻿  Polymorphism.cpp
+Polymorphism.obj : error LNK2019: unresolved external symbol "public: __thiscall Derived::~Derived(void)" (??1Derived@@QAE@XZ) referenced in function _main
+C:\Users\mrmuley\Documents\Books\Coding\C++\Polymorphism\Polymorphism\Debug\Polymorphism.exe : fatal error LNK1120: 1 unresolved externals
